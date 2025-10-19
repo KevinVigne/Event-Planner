@@ -1,0 +1,16 @@
+
+{
+  "name": "kevin/eventplanner",
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/",
+      "Config\\": "config/"
+    }
+  },
+  "authors": [
+    {
+      "name": "kevin"
+    }
+  ],
+  "require": {}
+}
