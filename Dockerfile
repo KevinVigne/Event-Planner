@@ -1,27 +1,25 @@
-# Depuis php 8.2
 FROM php:8.2-fpm
 
-# Ajoute les extensions pdo et pdo_mysql 
+# Installer extensions nécessaires
 RUN docker-php-ext-install pdo pdo_mysql
 
-# Règle la timezone sur Paris
+# Régler le timezone
 RUN ln -snf /usr/share/zoneinfo/Europe/Paris /etc/localtime \
     && echo "Europe/Paris" > /etc/timezone
 
-# Installation de Composer
+# Installer Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Dans le chemin suivant 
 WORKDIR /var/www/html
 
-# Copie composer. json et composer.lock     
+# Copier d’abord composer.json pour tirer parti du cache Docker
 COPY composer.json composer.lock* ./
 
-# Installation des dépendances
+# Installer les dépendances
 RUN composer install --no-dev --optimize-autoloader
 
-# Copie du reste du projet
+# Copier le reste du projet
 COPY . .
 
-# Génération d'autoload en préventif
+# Générer autoload au cas où
 RUN composer dump-autoload --optimize
