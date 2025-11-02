@@ -5,7 +5,8 @@ use Config\Router;
 
 $router = new Router;
 
-$router->addRoute('/404', 'ErrorController', 'notFound');
+$router->addRoute('/404','ErrorController', 'notFound');
+$router->addRoute('/','HomeController','index');
 
 
 $router->handleRequest();
